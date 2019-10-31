@@ -17,9 +17,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(this);
-        setInitialFragment();
+        loadFragment(new FragmentInicio());
+        //setInitialFragment();
     }
 
     private boolean loadFragment(Fragment fragment){
@@ -38,6 +40,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (menuItem.getItemId()) {
             case R.id.navigation_home:
                 fragment = new FragmentInicio();
+                break;
+                /*
+            case R.id.navigation_dashboard:
+                fragment = new MenuFragment();
+                break;
+                 */
+            case R.id.navigation_acerca:
+                fragment = new AecrcaFragment();
                 break;
         }
         replaceFragment(fragment);
