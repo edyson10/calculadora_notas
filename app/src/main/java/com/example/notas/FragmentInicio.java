@@ -21,9 +21,9 @@ public class FragmentInicio extends Fragment {
 
     View view;
     EditText pp, sp, tp, ex;
-    TextView p1, p2, p3, exa, notaF;
+    TextView p1, p2, p3, exa, notaF, falta;
     Button calcular, limpiar;
-    LinearLayout layoutNotas, layoutFinal;
+    LinearLayout layoutNotas, layoutFinal, layoutFalta;
 
     @SuppressLint("WrongViewCast")
     @Nullable
@@ -40,12 +40,15 @@ public class FragmentInicio extends Fragment {
         p3 = (TextView) view.findViewById(R.id.tercerPrevio);
         exa = (TextView) view.findViewById(R.id.examen);
         notaF = (TextView) view.findViewById(R.id.notaFinal);
+        falta = (TextView) view.findViewById(R.id.notaFaltante);
         calcular = (Button) view.findViewById(R.id.btnCalcular);
         limpiar = (Button) view.findViewById(R.id.btnLimpiar);
         layoutNotas = (LinearLayout) view.findViewById(R.id.layoutNotas);
         layoutFinal = (LinearLayout) view.findViewById(R.id.layoutFinal);
+        layoutFalta = (LinearLayout) view.findViewById(R.id.layoutFaltante);
         layoutFinal.setVisibility(View.INVISIBLE);
         layoutNotas.setVisibility(View.INVISIBLE);
+        layoutFalta.setVisibility(View.INVISIBLE);
 
         calcular.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +84,7 @@ public class FragmentInicio extends Fragment {
                     exa.setText(String.valueOf(formato1.format(notaFinal)));
                     layoutNotas.setVisibility(View.VISIBLE);
                     layoutFinal.setVisibility(View.INVISIBLE);
+                    layoutFalta.setVisibility(View.INVISIBLE);
                 } else Toast.makeText(getActivity(), "Digite un numero del 1 al 5", Toast.LENGTH_SHORT).show();
             } else if(tp.getText().toString().isEmpty() && ex.getText().toString().isEmpty()){
                 if(Float.parseFloat(pp.getText().toString()) >= 0 && Float.parseFloat(pp.getText().toString()) <= 5
@@ -93,6 +97,7 @@ public class FragmentInicio extends Fragment {
                     exa.setText(String.valueOf(formato1.format(notaFinal)));
                     layoutNotas.setVisibility(View.VISIBLE);
                     layoutFinal.setVisibility(View.INVISIBLE);
+                    layoutFalta.setVisibility(View.INVISIBLE);
                 } else Toast.makeText(getActivity(), "Digite un numero del 1 al 5", Toast.LENGTH_SHORT).show();
             } else if(ex.getText().toString().isEmpty()){
                 if(Float.parseFloat(pp.getText().toString()) >= 0 && Float.parseFloat(pp.getText().toString()) <= 5
@@ -106,6 +111,7 @@ public class FragmentInicio extends Fragment {
                     exa.setText(String.valueOf(formato1.format(notaFinal)));
                     layoutNotas.setVisibility(View.VISIBLE);
                     layoutFinal.setVisibility(View.INVISIBLE);
+                    layoutFalta.setVisibility(View.INVISIBLE);
                 } else Toast.makeText(getActivity(), "Digite un numero del 1 al 5", Toast.LENGTH_SHORT).show();
             } else if (!pp.getText().toString().isEmpty() && !sp.getText().toString().isEmpty() && !tp.getText().toString().isEmpty() && !ex.getText().toString().isEmpty()){
                 if(Float.parseFloat(pp.getText().toString()) >= 0 && Float.parseFloat(pp.getText().toString()) <= 5
@@ -120,11 +126,17 @@ public class FragmentInicio extends Fragment {
                     float setenta = ((p + s + t) / 3) * 0.7f;
                     notaFinal = setenta + (e * 0.3f);
                     layoutFinal.setVisibility(View.VISIBLE);
+                    layoutFalta.setVisibility(View.VISIBLE);
                     layoutNotas.setVisibility(View.INVISIBLE);
-                    notaF.setText(String.valueOf(notaFinal));
+                    notaF.setText(String.valueOf(formato1.format(notaFinal)));
                     if(notaFinal >= 3) {
                         Toast.makeText(getActivity(), "Felicitaciones has pasado la materia. :)", Toast.LENGTH_SHORT).show();
-                    } else Toast.makeText(getActivity(), "Has perdido la materia. :'(", Toast.LENGTH_SHORT).show();
+                        layoutFalta.setVisibility(View.INVISIBLE);
+                    } else {
+                        Toast.makeText(getActivity(), "Has perdido la materia. :'(", Toast.LENGTH_SHORT).show();
+                        float faltante = 3 - notaFinal;
+                        falta.setText(String.valueOf(formato1.format(faltante)));
+                    }
                 } else Toast.makeText(getActivity(), "Digite un numero del 1 al 5", Toast.LENGTH_SHORT).show();
             }
         } else Toast.makeText(getActivity(), "Debe de llenar el primer previo", Toast.LENGTH_SHORT).show();

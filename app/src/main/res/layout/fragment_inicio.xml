@@ -98,7 +98,6 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="10sp"
                 android:layout_weight="1"
-                android:visibility="gone"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="fill_parent"
@@ -113,6 +112,29 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Nota final"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutFaltante"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="10sp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Te falta para pasar"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/notaFaltante"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Nota faltante"/>
             </LinearLayout>
 
             <LinearLayout
