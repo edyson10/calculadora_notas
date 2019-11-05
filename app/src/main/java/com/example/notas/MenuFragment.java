@@ -1,15 +1,23 @@
 package com.example.notas;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 public class MenuFragment extends Fragment {
+
+    EditText nombre;
+    Button editar, guardar;
+    View view;
+    SharedPreferences preferences;
 
     private OnFragmentInteractionListener mListener;
 
@@ -35,7 +43,36 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        view = inflater.inflate(R.layout.fragment_menu, container, false);
+        nombre = view.findViewById(R.id.txtNombre);
+        editar = view.findViewById(R.id.btnEditar);
+        guardar = view.findViewById(R.id.btnGuardar);
+
+        editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editarDatos();
+            }
+        });
+
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                guardarDatos();
+            }
+        });
+        return view;
+    }
+
+    private void editarDatos(){
+
+    }
+
+    private void guardarDatos(){
+        preferences = getActivity().getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.commit();
+        
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -64,16 +101,6 @@ public class MenuFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
