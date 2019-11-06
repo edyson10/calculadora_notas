@@ -129,7 +129,7 @@ public class FragmentInicio extends Fragment {
                     layoutFalta.setVisibility(View.VISIBLE);
                     layoutNotas.setVisibility(View.INVISIBLE);
                     notaF.setText(String.valueOf(formato1.format(notaFinal)));
-                    if(notaFinal >= 3) {
+                    if(notaFinal >= 2.96) {
                         Toast.makeText(getActivity(), "Felicitaciones has pasado la materia. :)", Toast.LENGTH_SHORT).show();
                         layoutFalta.setVisibility(View.INVISIBLE);
                     } else {

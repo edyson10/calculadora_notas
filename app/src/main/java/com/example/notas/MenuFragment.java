@@ -1,15 +1,23 @@
 package com.example.notas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class MenuFragment extends Fragment {
@@ -18,6 +26,8 @@ public class MenuFragment extends Fragment {
     Button editar, guardar;
     View view;
     SharedPreferences preferences;
+    ImageView mImage;
+    private Uri mImageUri;
 
     private OnFragmentInteractionListener mListener;
 
@@ -44,9 +54,16 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_menu, container, false);
+        preferences = getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+
         nombre = view.findViewById(R.id.txtNombre);
         editar = view.findViewById(R.id.btnEditar);
         guardar = view.findViewById(R.id.btnGuardar);
+        mImage = view.findViewById(R.id.imagenPerfil);
+        nombre.setEnabled(false);
+        nombre.setClickable(false);
+        nombre.setCursorVisible(false);
+        cargarPreferencias();
 
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,21 +75,75 @@ public class MenuFragment extends Fragment {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                guardarDatos();
+                if(!nombre.getText().toString().isEmpty()){
+                    guardarDatos(nombre.getText().toString());
+                } else Toast.makeText(getContext(), "Debe de completar los campos.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        mImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cargarImagen();
+            }
+        });
+
         return view;
     }
 
     private void editarDatos(){
-
+        nombre.setEnabled(true);
+        nombre.setClickable(true);
+        nombre.setCursorVisible(true);
     }
 
-    private void guardarDatos(){
-        preferences = getActivity().getSharedPreferences("datos", Context.MODE_PRIVATE);
+    private void guardarDatos(String nom){
+        SharedPreferences preferences = getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("nombre", nom).apply();
         editor.commit();
-        
+        Toast.makeText(getContext(), "Se guardo correctamente.", Toast.LENGTH_SHORT).show();
+        nombre.setEnabled(false);
+        nombre.setClickable(false);
+        nombre.setCursorVisible(false);
+    }
+
+    private void cargarImagen(){
+        Intent intent;
+        if (Build.VERSION.SDK_INT < 19) {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        } else {
+            //intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            //intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        }
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicación"), 10);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 10) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    mImageUri = data.getData();
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("image", String.valueOf(mImageUri));
+                    editor.commit();
+                    mImage.setImageURI(mImageUri);
+                    mImage.invalidate();
+                }
+            }
+        }
+    }
+
+    private void cargarPreferencias(){
+        SharedPreferences preferences = getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        nombre.setText(preferences.getString("nombre",""));
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String mImageUri = preferences.getString("image", null);
+        mImage.setImageURI(Uri.parse(mImageUri));
     }
 
     // TODO: Rename method, update argument and hook method into UI event
