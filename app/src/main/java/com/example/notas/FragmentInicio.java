@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.notas.Clases.NumberTextWatcherForThousand;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -49,6 +53,12 @@ public class FragmentInicio extends Fragment {
         layoutFinal.setVisibility(View.INVISIBLE);
         layoutNotas.setVisibility(View.INVISIBLE);
         layoutFalta.setVisibility(View.INVISIBLE);
+
+        /****
+        ====== Lineas de codigo para formatear el texto y colocar punto decimal ======
+        pp.addTextChangedListener(new NumberTextWatcherForThousand(pp));
+        NumberTextWatcherForThousand.trimCommaOfString(pp.getText().toString());
+        *****/
 
         calcular.setOnClickListener(new View.OnClickListener() {
             @Override
