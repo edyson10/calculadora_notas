@@ -133,6 +133,8 @@ public class MenuFragment extends Fragment {
                     editor.commit();
                     mImage.setImageURI(mImageUri);
                     mImage.invalidate();
+                    String mImageUri = preferences.getString("image", null);
+                    mImage.setImageURI(Uri.parse(mImageUri));
                 }
             }
         }
