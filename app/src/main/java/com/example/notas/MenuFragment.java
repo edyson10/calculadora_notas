@@ -145,7 +145,9 @@ public class MenuFragment extends Fragment {
         nombre.setText(preferences.getString("nombre",""));
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String mImageUri = preferences.getString("image", null);
-        mImage.setImageURI(Uri.parse(mImageUri));
+        if(mImageUri != null){
+            mImage.setImageURI(Uri.parse(mImageUri));
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
