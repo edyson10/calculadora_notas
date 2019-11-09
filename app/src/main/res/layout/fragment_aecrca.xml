@@ -7,6 +7,7 @@
     tools:context=".AecrcaFragment">
 
     <TextView
+        android:id="@+id/txtTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ACERCA"
@@ -16,18 +17,11 @@
         android:textSize="20dp"
         android:layout_marginTop="30dp"/>
 
-    <ImageView
-        android:id="@+id/logoWifix"
-        android:layout_width="300dp"
-        android:layout_height="150dp"
-        android:src="@drawable/logo_loyal"
-        android:layout_marginTop="70dp"
-        android:layout_centerHorizontal="true"/>
-
     <LinearLayout
+        android:id="@+id/layout_texto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logoWifix"
+        android:layout_below="@id/txtTitulo"
         android:orientation="vertical"
         android:layout_gravity="center"
         android:layout_marginTop="10dp">
@@ -42,48 +36,40 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Versión 1.0"
+            android:text="Versión 1.5"
             android:gravity="center"
             android:textStyle="bold"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/lay_desarrollo"
-        android:layout_below="@id/logoWifix"
+    <ImageView
+        android:id="@+id/logoWifix"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logo_loyal"
+        android:layout_marginTop="90dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/txtTitulo"/>
+
+    <TextView
+        android:id="@+id/txtDesa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="90dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="2dp"
-            android:text="DESARROLLADORES"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="18dp"/>
-        <TextView
-            android:id="@+id/txtNombreEmpresa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="2dp"
-            android:textStyle="italic"
-            android:textSize="17dp"
-            android:text="LOYAL SYSTEMS"
-            android:gravity="center"/>
+        android:layout_centerHorizontal="true"
+        android:text="DESARROLLADORES"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_below="@id/logoWifix" />
 
-        <!--
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/logo_loyal"/>
-        -->
-    </LinearLayout>
+    <TextView
+        android:id="@+id/txtNombreEmpresa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtDesa"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:text="LOYALSOFT"
+        android:textSize="17dp"
+        android:textStyle="italic" />
 
 </RelativeLayout>
