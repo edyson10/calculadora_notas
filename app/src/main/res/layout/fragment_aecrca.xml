@@ -68,7 +68,7 @@
         android:layout_below="@+id/txtDesa"
         android:layout_marginTop="2dp"
         android:gravity="center"
-        android:text="LOYALSOFT"
+        android:text="LOYAL SOFT"
         android:textSize="17dp"
         android:textStyle="italic" />
 
