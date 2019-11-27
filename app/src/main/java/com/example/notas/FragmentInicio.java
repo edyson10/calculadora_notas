@@ -28,6 +28,7 @@ public class FragmentInicio extends Fragment {
     TextView p1, p2, p3, exa, notaF, falta;
     Button calcular, limpiar;
     LinearLayout layoutNotas, layoutFinal;
+    float notaFinal, primerp, segundop, tercerp, examen;
 
     @SuppressLint("WrongViewCast")
     @Nullable
@@ -39,6 +40,7 @@ public class FragmentInicio extends Fragment {
         sp = (EditText) view.findViewById(R.id.txtSP);
         tp = (EditText) view.findViewById(R.id.txtTP);
         ex = (EditText) view.findViewById(R.id.txtEX);
+
         p1 = (TextView) view.findViewById(R.id.primerPrevio);
         p2 = (TextView) view.findViewById(R.id.segundoPrevio);
         p3 = (TextView) view.findViewById(R.id.tercerPrevio);
@@ -48,7 +50,6 @@ public class FragmentInicio extends Fragment {
         limpiar = (Button) view.findViewById(R.id.btnLimpiar);
         layoutNotas = (LinearLayout) view.findViewById(R.id.layoutNotas);
         layoutFinal = (LinearLayout) view.findViewById(R.id.layoutFinal);
-        layoutFinal.setVisibility(View.INVISIBLE);
         layoutNotas.setVisibility(View.INVISIBLE);
 
         /****
@@ -90,7 +91,9 @@ public class FragmentInicio extends Fragment {
                     p3.setText(String.valueOf(formato1.format(notaFinal)));
                     exa.setText(String.valueOf(formato1.format(notaFinal)));
                     layoutNotas.setVisibility(View.VISIBLE);
-                    layoutFinal.setVisibility(View.INVISIBLE);
+                    primerp = Float.parseFloat(pp.getText().toString());
+                    notaFinal = (((primerp + 0 + 0) / 3) * 0.7f) + ( 0 * 0.3f);
+                    notaF.setText(formato1.format(notaFinal));
                 } else Toast.makeText(getActivity(), "Digite un numero del 1 al 5", Toast.LENGTH_SHORT).show();
             } else if(tp.getText().toString().isEmpty() && ex.getText().toString().isEmpty()){
                 if(Float.parseFloat(pp.getText().toString()) >= 0 && Float.parseFloat(pp.getText().toString()) <= 5
@@ -102,7 +105,10 @@ public class FragmentInicio extends Fragment {
                     p3.setText(String.valueOf(formato1.format(notaFinal)));
                     exa.setText(String.valueOf(formato1.format(notaFinal)));
                     layoutNotas.setVisibility(View.VISIBLE);
-                    layoutFinal.setVisibility(View.INVISIBLE);
+                    primerp = Float.parseFloat(pp.getText().toString());
+                    segundop = Float.parseFloat(sp.getText().toString());
+                    notaFinal = (((primerp + segundop + 0) / 3) * 0.7f) + ( 0 * 0.3f);
+                    notaF.setText(formato1.format(notaFinal));
                 } else Toast.makeText(getActivity(), "Digite un numero del 1 al 5", Toast.LENGTH_SHORT).show();
             } else if(ex.getText().toString().isEmpty()){
                 if(Float.parseFloat(pp.getText().toString()) >= 0 && Float.parseFloat(pp.getText().toString()) <= 5
@@ -115,29 +121,36 @@ public class FragmentInicio extends Fragment {
                     p3.setText(formato1.format(Float.parseFloat(tp.getText().toString())));
                     exa.setText(String.valueOf(formato1.format(notaFinal)));
                     layoutNotas.setVisibility(View.VISIBLE);
-                    layoutFinal.setVisibility(View.INVISIBLE);
+                    primerp = Float.parseFloat(pp.getText().toString());
+                    segundop = Float.parseFloat(sp.getText().toString());
+                    tercerp = Float.parseFloat(tp.getText().toString());
+                    notaFinal = (((primerp + segundop + tercerp) / 3) * 0.7f) + ( 0 * 0.3f);
+                    notaF.setText(formato1.format(notaFinal));
                 } else Toast.makeText(getActivity(), "Digite un numero del 1 al 5", Toast.LENGTH_SHORT).show();
             } else if (!pp.getText().toString().isEmpty() && !sp.getText().toString().isEmpty() && !tp.getText().toString().isEmpty() && !ex.getText().toString().isEmpty()){
                 if(Float.parseFloat(pp.getText().toString()) >= 0 && Float.parseFloat(pp.getText().toString()) <= 5
                         && Float.parseFloat(sp.getText().toString()) >= 0 && Float.parseFloat(sp.getText().toString()) <= 5
                         && Float.parseFloat(tp.getText().toString()) >= 0 && Float.parseFloat(tp.getText().toString()) <= 5
                         && Float.parseFloat(ex.getText().toString()) >= 0 && Float.parseFloat(ex.getText().toString()) <= 5){
-                    float p = Float.parseFloat(formato1.format(Float.parseFloat(pp.getText().toString())));
-                    float s = Float.parseFloat(formato1.format(Float.parseFloat(sp.getText().toString())));
-                    float t = Float.parseFloat(formato1.format(Float.parseFloat(tp.getText().toString())));
-                    float e = Float.parseFloat(formato1.format(Float.parseFloat(ex.getText().toString())));
 
-                    float setenta = ((p + s + t) / 3) * 0.7f;
-                    notaFinal = setenta + (e * 0.3f);
-                    layoutFinal.setVisibility(View.VISIBLE);
-                    layoutNotas.setVisibility(View.INVISIBLE);
+                    primerp = Float.parseFloat(formato1.format(Float.parseFloat(pp.getText().toString())));
+                    segundop = Float.parseFloat(formato1.format(Float.parseFloat(sp.getText().toString())));
+                    tercerp = Float.parseFloat(formato1.format(Float.parseFloat(tp.getText().toString())));
+                    examen = Float.parseFloat(formato1.format(Float.parseFloat(ex.getText().toString())));
+                    notaFinal = (((primerp + segundop + tercerp) / 3) * 0.7f) + ( examen * 0.3f);
+                    p1.setText(formato1.format(Float.parseFloat(pp.getText().toString())));
+                    p2.setText(formato1.format(Float.parseFloat(sp.getText().toString())));
+                    p3.setText(formato1.format(Float.parseFloat(tp.getText().toString())));
+                    exa.setText(formato1.format(Float.parseFloat(ex.getText().toString())));
+                    notaF.setText(formato1.format(notaFinal));
+                    layoutNotas.setVisibility(View.VISIBLE);
                     notaF.setText(String.valueOf(formato1.format(notaFinal)));
                     if(notaFinal >= 2.96) {
                         Toast.makeText(getActivity(), "Felicitaciones has pasado la materia. :)", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getActivity(), "Has perdido la materia. :'(", Toast.LENGTH_SHORT).show();
                         float faltante = 3 - notaFinal;
-                        falta.setText(String.valueOf(formato1.format(faltante)));
+                        //falta.setText(String.valueOf(formato1.format(faltante)));
                     }
                 } else Toast.makeText(getActivity(), "Digite un numero del 1 al 5", Toast.LENGTH_SHORT).show();
             }
